@@ -30,7 +30,9 @@ const Sudoku = (data) =>
 {
   //   Private methods
   // -------------------------
-    hasDuplicates = (param) => param.every(el => Array.isArray(el) && [...new Set(el.filter(x => Number.isInteger(x)))].length === param.length) // param is an array of dimension NxN
+    hasDuplicates = (param) => {
+        return Array.isArray(param) && param.every(el => Array.isArray(el) && [...new Set(el.filter(x => Number.isInteger(x)))].length === param.length)
+    } // param is an array of dimension NxN
 
     rowCase = () => {
         return hasDuplicates(data)
@@ -56,31 +58,23 @@ const Sudoku = (data) =>
             for (let i = 0; i < data.length; i++) {
                 count++
                 const slicedArray = data[i].slice(
-                initialSliceCount,
-                initialSliceCount
-                    + len);
+                    initialSliceCount,
+                    initialSliceCount + len);
                 
-                // console.log(`array at index ${i} => ${data[i]} sliced array ${slicedArray} initialSliceCount ${initialSliceCount} ${initialSliceCount + len}`)
                 localSubarray.push(...slicedArray)
 
-                // console.log(`localsubarray ${localSubarray}`)
         
                 if (count === len) {
-                    // console.log(`i ${i}`)
                     result.push(localSubarray)
                     localSubarray = []
                     count = 0
                 }
         
-                // console.log(`result ${result}`)
-                
             }
             times++
             initialSliceCount += len
-            // console.log(`result ${result.length}`)
         }
         
-        // console.log(`result ${result[4]}`)
         return result
 
     }
