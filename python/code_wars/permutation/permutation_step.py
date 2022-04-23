@@ -1,6 +1,5 @@
 def swap(a, b, array):
-    array[b], array[a]
-    array[b], array[a] = array[a], array[b]
+    array[b], array[a] = (array[b], array[a])[::-1]
 
     return int(''.join(array))
 
