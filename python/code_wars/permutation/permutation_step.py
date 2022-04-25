@@ -1,16 +1,9 @@
-def swap(a, b, array):
-    array[b], array[a] = (array[b], array[a])[::-1]
-
-    return int(''.join(array))
-
+import itertools
 
 def permutation_step(num):
-    res = []
+    res, result = ([], [])
     res[:] = str(num)
-    combined = []
 
-    for i in range(len(res)):
-        local_subarray = res
-        [combined.append(item) for j in range(len(res) - 1) if (item := swap(j+1, j, local_subarray)) > num]
+    [result.append(item) for i in list(itertools.permutations(res)) if (item := int(''.join(list(i)))) > num]
 
-    return min(combined)
+    return min(result) if len(result) else -1

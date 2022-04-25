@@ -16,5 +16,5 @@ function PermutationStep(num) {
     return combined.sort().find(el => el > num) || -1
 }
 
-PermutationStep(123);
+PermutationStep(123); // 132
 
