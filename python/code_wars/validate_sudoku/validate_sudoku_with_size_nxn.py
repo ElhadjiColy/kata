@@ -35,27 +35,44 @@ class ValidateSudokuWithSizeNxN:
         print('destructor called.')
 
     @staticmethod
-    def has_no_duplicates():
-        pass
+    def has_no_duplicates(param):
+        return isinstance(param, (list, tuple)) and all(map(lambda x: ((len(set(x)) == len(param)) and all([isinstance(item, int) for item in x])), param))
 
-    def row_case(self):
-        pass
+    # @property
+    def __row_case(self):
+        print('row case')
+        return self.has_no_duplicates(self.data)
 
-    def column_case(self):
-        pass
+    # @property
+    def __column_case(self):
+        return self.has_no_duplicates(self.__build_columns_arrays())
 
-    def subsquare_case(self):
-        pass
+    # @property
+    def __subsquare_case(self):
+        return self.has_no_duplicates(self.__build_subsquares_arrays())
 
-    def build_columns_arrays(self):
-        pass
+    def __build_columns_arrays(self):
+        return list(zip(*self.data))
     
+    def __build_subsquares_arrays(self):
+        local_subarray, result = ([], [])
+        count, times, initial_slice_count, length = (0, 1, 0, int(len(self.data) ** 0.5))
 
-    def build_subsquares_arrays(self):
-        pass
+        while times <= length:
+            for i in range(len(self.data)):
+                count += 1
+                sliced_array = tuple(self.data[i])[initial_slice_count:initial_slice_count+length]
+                local_subarray.extend(sliced_array)
+
+                if count == length:
+                    result.append(local_subarray)
+                    local_subarray = []
+                    count = 0
+
+            times += 1
+            initial_slice_count += length
+
+        return result
 
     def validate(self):
-        pass
-
-
-# a = Sudoku.class_method()
+        return False if not isinstance(int(len(self.data) ** 0.5), int) else (self.__row_case() and self.__column_case() and self.__subsquare_case())
