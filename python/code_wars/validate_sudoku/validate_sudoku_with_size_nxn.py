@@ -76,3 +76,5 @@ class ValidateSudokuWithSizeNxN:
 
     def validate(self):
         return False if not isinstance(int(len(self.data) ** 0.5), int) else (self.__row_case() and self.__column_case() and self.__subsquare_case())
+
+        
